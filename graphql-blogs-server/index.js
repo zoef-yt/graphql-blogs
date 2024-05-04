@@ -40,7 +40,7 @@ const typeDefs = gql`
 		comments(articleId: Int!): [Comment]
 	}
 	type Mutation {
-		article(title: String!, content: String!): Article
+		article(title: String!, content: String!): String
 		comment(articleId: Int!, text: String!): Comment
 	}
 `;
@@ -58,7 +58,7 @@ const resolvers = {
       const db = await connectToCluster();
       const article = await db?.collection("blogs")?.insertOne({ title, content, createdAt: new Date() })
       console.log(article)
-      return article;
+      return article.insertedId;
     }
   }
 };
